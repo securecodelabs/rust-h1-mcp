@@ -184,15 +184,6 @@ impl HackerOneMcp {
         }
     }
 
-    /// Return current authenticated user info.
-    #[tool(description = "Get information about the authenticated HackerOne user (me endpoint)")]
-    async fn get_me(&self) -> String {
-        match self.h1_get("/me").await {
-            Ok(v) => Self::pretty(v),
-            Err(e) => format!("Error: {e}"),
-        }
-    }
-
     /// Get a HackerOne user by username.
     #[tool(description = "Get the profile of a specific HackerOne user by username")]
     async fn get_user(&self, Parameters(p): Parameters<GetUserInput>) -> String {
@@ -311,7 +302,7 @@ impl HackerOneMcp {
     /// List programs.
     #[tool(description = "List HackerOne programs you are a member of or have access to")]
     async fn list_programs(&self, Parameters(p): Parameters<ListProgramsInput>) -> String {
-        let path = format!("/programs?page[number]={}", p.page.unwrap_or(1));
+        let path = format!("/me/programs?page[number]={}", p.page.unwrap_or(1));
         match self.h1_get(&path).await {
             Ok(v) => Self::pretty(v),
             Err(e) => format!("Error listing programs: {e}"),
