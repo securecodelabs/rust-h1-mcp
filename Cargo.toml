@@ -1,0 +1,19 @@
+[package]
+name = "h1-mcp"
+version = "0.1.0"
+edition = "2024"
+description = "HackerOne MCP server – interact with the HackerOne API via Model Context Protocol"
+
+[[bin]]
+name = "h1-mcp"
+path = "src/main.rs"
+
+[dependencies]
+rmcp = { version = "0.16", features = ["server", "macros", "transport-io", "schemars"] }
+tokio = { version = "1", features = ["macros", "rt", "rt-multi-thread", "io-std"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
